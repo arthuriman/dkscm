@@ -21,11 +21,12 @@ insert into sys_status(status_code, status_text) values('DISABLE', '禁用');
 insert into sys_status(status_code, status_text) values('APPLY', '已申请，未购买审批');
 insert into sys_status(status_code, status_text) values('REVIEW', '已购买审批，未采购');
 insert into sys_status(status_code, status_text) values('PURCHASE', '已采购，未入库审批');
-insert into sys_status(status_code, status_text) values('REPO_REVIEW', '已采购，未入库审批');
-insert into sys_status(status_code, status_text) values('REPO', '已入库，未领取');
+insert into sys_status(status_code, status_text) values('STORE_REVIEW', '已采购，未入库审批');
+insert into sys_status(status_code, status_text) values('STORE', '已入库，未领取');
 insert into sys_status(status_code, status_text) values('RECEIVE', '已领取');
 insert into sys_status(status_code, status_text) values('REVIEW_BACK', '购买审批驳回');
-insert into sys_status(status_code, status_text) values('REPO_BACK', '入库审批驳回');
+insert into sys_status(status_code, status_text) values('STORE_BACK', '入库审批驳回');
+insert into sys_status(status_code, status_text) values('APPLY_BACK', '申请驳回');
 
 -- 角色信息表：sys_role
 drop table if exists sys_role;
@@ -67,11 +68,12 @@ insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, stat
 insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(2, '采购审批', 'purchase/APPLY/index', 'fa fa-pencil-square-o', 8, 'ENABLE');
 insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(2, '物资购买', 'purchase/REVIEW/index', 'fa fa-cart-plus', 9, 'ENABLE');
 insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(2, '入库审批', 'purchase/PURCHASE/index', 'fa fa-pencil-square-o', 10, 'ENABLE');
-insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(2, '物资入库', 'purchase/REPO_REVIEW/index', 'fa fa-building-o', 11, 'ENABLE');
-insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(2, '物资领取', 'purchase/REPO/index', 'fa fa-shopping-basket', 12, 'ENABLE');
+insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(2, '物资入库', 'purchase/STORE_REVIEW/index', 'fa fa-building-o', 11, 'ENABLE');
+insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(2, '物资领取', 'purchase/STORE/index', 'fa fa-shopping-basket', 12, 'ENABLE');
 insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(3, '已领取采购', 'purchase/RECEIVE/index', 'fa fa-sign-language', 13, 'ENABLE');
 insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(3, '已申请驳回采购', 'purchase/REIVEW_BACK/index', 'fa fa-reply', 14, 'ENABLE');
-insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(3, '已入库驳回采购', 'purchase/REPO_BACK/index', 'fa fa-reply-all', 15, 'ENABLE');
+insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(3, '已入库驳回采购', 'purchase/STORE_BACK/index', 'fa fa-reply', 15, 'ENABLE');
+insert into sys_menu(parent_id, menu_text, menu_url, menu_icon, sort_order, status_code) values(3, '已撤回申请', 'purchase/APPLY_BACK/index', 'fa fa-reply', 15, 'ENABLE');
 
 -- 角色菜单中间表：sys_role_menu
 drop table if exists sys_role_menu;
@@ -94,6 +96,7 @@ insert into sys_role_menu(role_id, menu_id) values(1, 12);
 insert into sys_role_menu(role_id, menu_id) values(1, 13);
 insert into sys_role_menu(role_id, menu_id) values(1, 14);
 insert into sys_role_menu(role_id, menu_id) values(1, 15);
+insert into sys_role_menu(role_id, menu_id) values(1, 16);
 insert into sys_role_menu(role_id, menu_id) values(2, 1);
 insert into sys_role_menu(role_id, menu_id) values(2, 2);
 insert into sys_role_menu(role_id, menu_id) values(2, 3);
@@ -103,6 +106,7 @@ insert into sys_role_menu(role_id, menu_id) values(2, 12);
 insert into sys_role_menu(role_id, menu_id) values(2, 13);
 insert into sys_role_menu(role_id, menu_id) values(2, 14);
 insert into sys_role_menu(role_id, menu_id) values(2, 15);
+insert into sys_role_menu(role_id, menu_id) values(2, 16);
 insert into sys_role_menu(role_id, menu_id) values(3, 1);
 insert into sys_role_menu(role_id, menu_id) values(3, 2);
 insert into sys_role_menu(role_id, menu_id) values(3, 3);
@@ -112,6 +116,7 @@ insert into sys_role_menu(role_id, menu_id) values(3, 10);
 insert into sys_role_menu(role_id, menu_id) values(3, 13);
 insert into sys_role_menu(role_id, menu_id) values(3, 14);
 insert into sys_role_menu(role_id, menu_id) values(3, 15);
+insert into sys_role_menu(role_id, menu_id) values(3, 16);
 insert into sys_role_menu(role_id, menu_id) values(4, 1);
 insert into sys_role_menu(role_id, menu_id) values(4, 2);
 insert into sys_role_menu(role_id, menu_id) values(4, 3);
@@ -120,6 +125,7 @@ insert into sys_role_menu(role_id, menu_id) values(4, 9);
 insert into sys_role_menu(role_id, menu_id) values(4, 13);
 insert into sys_role_menu(role_id, menu_id) values(4, 14);
 insert into sys_role_menu(role_id, menu_id) values(4, 15);
+insert into sys_role_menu(role_id, menu_id) values(4, 16);
 insert into sys_role_menu(role_id, menu_id) values(5, 1);
 insert into sys_role_menu(role_id, menu_id) values(5, 2);
 insert into sys_role_menu(role_id, menu_id) values(5, 3);
@@ -128,6 +134,7 @@ insert into sys_role_menu(role_id, menu_id) values(5, 11);
 insert into sys_role_menu(role_id, menu_id) values(5, 13);
 insert into sys_role_menu(role_id, menu_id) values(5, 14);
 insert into sys_role_menu(role_id, menu_id) values(5, 15);
+insert into sys_role_menu(role_id, menu_id) values(5, 16);
 
 -- 用户信息表：sys_user
 drop table if exists sys_user;
@@ -176,12 +183,12 @@ create table sys_purchase(
 	purchase_amount decimal(10, 2) comment '采购金额',
 	purchase_remark varchar(500) comment '采购备注',
 	purchase_time timestamp comment '采购时间',
-	repo_reviewer_id int(10) comment '入库审批人',
-	repo_review_remark varchar(500) comment '入库审批备注',
-	repo_review_time timestamp comment '入库审批时间',
-	repo_id int(10) comment '入库人',
-	repo_remark varchar(500) comment '入库备注',
-	repo_time timestamp comment '入库时间',
+	store_reviewer_id int(10) comment '入库审批人',
+	store_review_remark varchar(500) comment '入库审批备注',
+	store_review_time timestamp comment '入库审批时间',
+	storeman int(10) comment '入库人',
+	store_remark varchar(500) comment '入库备注',
+	store_time timestamp comment '入库时间',
 	receiver_id int(10) comment '领取人',
 	receiver_remark varchar(500) comment '领取备注',
 	receive_time timestamp comment '领取时间',
