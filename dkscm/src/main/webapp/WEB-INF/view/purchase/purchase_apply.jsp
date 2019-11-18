@@ -55,10 +55,10 @@
 						dataFilter: function(data) {
 							data = JSON.parse(data);
 							var returnData = {};
-							returnData.draw = data.page.draw;
-							returnData.recordsTotal = data.page.totalSize;
-							returnData.recordsFiltered = data.page.totalSize;
-							returnData.data = data.page.list;
+							returnData.draw = data.draw;
+							returnData.recordsTotal = data.totalSize;
+							returnData.recordsFiltered = data.totalSize;
+							returnData.data = data.list;
 							return JSON.stringify(returnData);
 						}
 					},
@@ -67,12 +67,65 @@
 						targets: 0,
 						data: function (row, type, val, meta) {
 							// 在序号位置
+							var tableSetings = $("#mytable").dataTable().fnSettings();
+							var begin = tableSetings._iDisplayStart;
+							var size = tableSetings._iDisplayLength;
+							alert(begin * size + begin + 1);
+							return begin * size + begin + 1;
 						}
 					}, {
 						targets: 1,
 						data: function (row, type, val, meta) {
 							// 在序号位置，row就代表JSON中list所对应的一个位置的数据对象
 							return row.purchaseNo;
+						}
+					}, {
+						targets: 2,
+						data: function (row, type, val, meta) {
+							// 在序号位置，row就代表JSON中list所对应的一个位置的数据对象
+							return row.goodsName;
+						}
+					}, {
+						targets: 3,
+						data: function (row, type, val, meta) {
+							// 在序号位置，row就代表JSON中list所对应的一个位置的数据对象
+							return row.goodsBand;
+						}
+					}, {
+						targets: 4,
+						data: function (row, type, val, meta) {
+							// 在序号位置，row就代表JSON中list所对应的一个位置的数据对象
+							return row.goodsType;
+						}
+					}, {
+						targets: 5,
+						data: function (row, type, val, meta) {
+							// 在序号位置，row就代表JSON中list所对应的一个位置的数据对象
+							return row.applyquantity + "&nbps;" + row.goodsUnit;
+						}
+					}, {
+						targets: 6,
+						data: function (row, type, val, meta) {
+							// 在序号位置，row就代表JSON中list所对应的一个位置的数据对象
+							return row.budget + "&nbps;元";
+						}
+					}, {
+						targets: 7,
+						data: function (row, type, val, meta) {
+							// 在序号位置，row就代表JSON中list所对应的一个位置的数据对象
+							return row.applyRemark;
+						}
+					}, {
+						targets: 8,
+						data: function (row, type, val, meta) {
+							// 在序号位置，row就代表JSON中list所对应的一个位置的数据对象
+							return "<span style='color:red;'></span>";
+						}
+					}, {
+						targets: 9,
+						data: function (row, type, val, meta) {
+							// 在序号位置，row就代表JSON中list所对应的一个位置的数据对象
+							return "<span style='color:red;'></span>";
 						}
 					}],
 					// 显示语言
@@ -127,6 +180,7 @@
 								<th>购买数量</th>
 								<th>预算</th>
 								<th>说明</th>
+								<th>状态</th>
 								<th>操作</th>
 							</tr>
 						</thead>
